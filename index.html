@@ -1,17 +1,398 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NeoSLAM</title>
+  <meta name="description" content="NeoSLAM project page" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-soft: #f5f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #5f6b7a;
+      --accent: #3273dc;
+      --accent-soft: #eef4ff;
+      --border: #dfe6f1;
+      --shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+      --maxw: 1100px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      width: min(var(--maxw), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(8px);
+      background: rgba(255, 255, 255, 0.92);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 0;
+    }
+
+    .brand {
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      font-size: 1.05rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .hero {
+      padding: 72px 0 34px;
+    }
+
+    .hero-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 40px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid #cfe0ff;
+      font-size: 0.88rem;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(2.3rem, 6vw, 4.1rem);
+      line-height: 1.05;
+      margin: 0 0 16px;
+      letter-spacing: -0.03em;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 860px;
+      margin: 0 auto 24px;
+    }
+
+    .center { text-align: center; }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 28px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: var(--text);
+      transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+      font-weight: 600;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: #bcd0f5;
+      background: #f8fbff;
+      color: var(--accent);
+    }
+
+    .btn.primary {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+    }
+
+    .btn.primary:hover {
+      background: #2b67c2;
+      color: #ffffff;
+      border-color: #2b67c2;
+    }
+
+    section {
+      padding: 18px 0 30px;
+    }
+
+    .section-title {
+      font-size: 1.7rem;
+      margin: 0 0 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .abstract-text,
+    .demo-text,
+    .muted {
+      color: var(--muted);
+    }
+
+    .overview-figure {
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+
+    .overview-figure img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .overview-placeholder,
+    .gif-placeholder {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      border: 1px dashed #cfd8e6;
+      background: #f8fafc;
+    }
+
+    .overview-placeholder {
+      aspect-ratio: 16 / 8;
+      border-radius: 20px;
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+      margin-top: 16px;
+    }
+
+    .demo-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .demo-card h3 {
+      margin: 0 0 12px;
+      font-size: 1.1rem;
+    }
+
+    .gif-gallery {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .gif-frame {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #ffffff;
+    }
+
+    .gif-frame img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gif-placeholder {
+      aspect-ratio: 16 / 9;
+      border-radius: 16px;
+    }
+
+    footer {
+      padding: 22px 0 56px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .demo-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-card {
+        padding: 28px 20px;
+      }
+
+      .nav-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .gif-gallery {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>NeoSLAM Testing </h1>
-  <p>Project page of our paper.</p>
-  <p>
-    <a href="#">Paper</a> |
-    <a href="#">Code</a> |
-    <a href="#">Video</a>
-  </p>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#top">NeoSLAM</a>
+      <div class="nav-links">
+        <a href="#abstract">Abstract</a>
+        <a href="#overview">Overview</a>
+        <a href="#demos">Demos</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container">
+        <div class="hero-card center">
+          <div class="eyebrow">Project Page</div>
+          <h1>NeoSLAM</h1>
+          <p class="subtitle">
+            Replace this line with a concise one-sentence summary of your paper.
+          </p>
+          <div class="button-row">
+            <a class="btn primary" href="#">Demo Data</a>
+            <a class="btn" href="#">Code for BKNO</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="abstract">
+      <div class="container">
+        <div class="card">
+          <h2 class="section-title">Abstract</h2>
+          <p class="abstract-text">
+            Replace this paragraph with your abstract. This section sits directly below the title area, as requested. You can keep it to one paragraph for readability on a paper project page.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="overview">
+      <div class="container">
+        <h2 class="section-title">Overview</h2>
+        <div class="overview-figure">
+          <!-- Replace with your overview figure -->
+          <!-- Example: <img src="assets/overview.png" alt="Overview of NeoSLAM" /> -->
+          <div class="overview-placeholder">Overview figure goes here</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="demos">
+      <div class="container">
+        <h2 class="section-title">Demos</h2>
+        <div class="demo-grid">
+          <div class="demo-card">
+            <h3>Demo 1</h3>
+            <div class="gif-gallery">
+              <div class="gif-frame">
+                <!-- Example: <img src="assets/demo1_1.gif" alt="Demo 1 clip 1" /> -->
+                <div class="gif-placeholder">Demo 1 · GIF 1</div>
+              </div>
+              <div class="gif-frame">
+                <!-- Example: <img src="assets/demo1_2.gif" alt="Demo 1 clip 2" /> -->
+                <div class="gif-placeholder">Demo 1 · GIF 2</div>
+              </div>
+              <div class="gif-frame">
+                <!-- Example: <img src="assets/demo1_3.gif" alt="Demo 1 clip 3" /> -->
+                <div class="gif-placeholder">Demo 1 · GIF 3</div>
+              </div>
+              <div class="gif-frame">
+                <!-- Example: <img src="assets/demo1_4.gif" alt="Demo 1 clip 4" /> -->
+                <div class="gif-placeholder">Demo 1 · GIF 4</div>
+              </div>
+            </div>
+            <p class="demo-text">
+              Add a two-line description for Demo 1 here. Use this space to explain what the four animations show and why they matter.
+            </p>
+          </div>
+
+          <div class="demo-card">
+            <h3>Demo 2</h3>
+            <div class="gif-gallery">
+              <div class="gif-frame">
+                <!-- Example: <img src="assets/demo2_1.gif" alt="Demo 2 clip 1" /> -->
+                <div class="gif-placeholder">Demo 2 · GIF 1</div>
+              </div>
+              <div class="gif-frame">
+                <!-- Example: <img src="assets/demo2_2.gif" alt="Demo 2 clip 2" /> -->
+                <div class="gif-placeholder">Demo 2 · GIF 2</div>
+              </div>
+              <div class="gif-frame">
+                <!-- Example: <img src="assets/demo2_3.gif" alt="Demo 2 clip 3" /> -->
+                <div class="gif-placeholder">Demo 2 · GIF 3</div>
+              </div>
+              <div class="gif-frame">
+                <!-- Example: <img src="assets/demo2_4.gif" alt="Demo 2 clip 4" /> -->
+                <div class="gif-placeholder">Demo 2 · GIF 4</div>
+              </div>
+            </div>
+            <p class="demo-text">
+              Add a two-line description for Demo 2 here. Keep it concise and focused on the key observation across the four GIFs.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 NeoSLAM Project Page.
+  </footer>
 </body>
 </html>
+
