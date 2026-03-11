@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NeoSLAM</title>
   <meta name="description" content="NeoSLAM project page" />
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
   <style>
     :root {
       --bg: #ffffff;
@@ -21,6 +32,7 @@
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -82,17 +94,6 @@
       border-radius: 24px;
       box-shadow: var(--shadow);
       padding: 40px;
-    }
-
-    .eyebrow {
-      display: inline-block;
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      border: 1px solid #cfe0ff;
-      font-size: 0.88rem;
-      margin-bottom: 18px;
     }
 
     h1 {
@@ -191,7 +192,7 @@
     }
 
     .overview-placeholder,
-    .gif-placeholder {
+    .media-placeholder {
       width: 100%;
       display: flex;
       align-items: center;
@@ -226,28 +227,29 @@
       font-size: 1.1rem;
     }
 
-    .gif-gallery {
+    .media-gallery {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
       margin-bottom: 12px;
     }
 
-    .gif-frame {
+    .media-frame {
       border-radius: 16px;
       overflow: hidden;
       border: 1px solid var(--border);
       background: #ffffff;
     }
 
-    .gif-frame img {
+    .media-frame video {
       width: 100%;
       aspect-ratio: 16 / 9;
       object-fit: cover;
       display: block;
+      background: #000000;
     }
 
-    .gif-placeholder {
+    .media-placeholder {
       aspect-ratio: 16 / 9;
       border-radius: 16px;
     }
@@ -275,12 +277,13 @@
     }
 
     @media (max-width: 640px) {
-      .gif-gallery {
+      .media-gallery {
         grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
+
 <body>
   <nav class="nav">
     <div class="container nav-inner">
@@ -297,14 +300,11 @@
     <section class="hero">
       <div class="container">
         <div class="hero-card center">
-          <div class="eyebrow">Project Page</div>
-          <h1>NeoSLAM</h1>
-          <p class="subtitle">
-            Replace this line with a concise one-sentence summary of your paper.
-          </p>
+          <h1>SLAM in Mobile-Excited Spatiotemporal Fields with Neural Operators</h1>
           <div class="button-row">
-            <a class="btn primary" href="#">Demo Data</a>
-            <a class="btn" href="#">Code for BKNO</a>
+            <a class="btn primary" href="#">Paper</a>
+            <!-- <a class="btn primary" href="#">Demo Data</a> -->
+            <a class="btn primary" href="https://github.com/neo-slam/BKNO">Code for BKNO</a>
           </div>
         </div>
       </div>
@@ -315,7 +315,7 @@
         <div class="card">
           <h2 class="section-title">Abstract</h2>
           <p class="abstract-text">
-            Replace this paragraph with your abstract. This section sits directly below the title area, as requested. You can keep it to one paragraph for readability on a paper project page.
+            This paper presents a new paradigm of indoor simultaneous localization and mapping (SLAM) that operates in the spatiotemporal fields excited by a commodity mobile device and engaged with the environment. It is applicable to active sensors such as active sonar and mmWave radar. Its core is a neural operator pretrained to capture the general mapping from the composite function space of the mobile-emitted excitation and environment medium distribution to that of the excited spatiotemporal signal field. With this new construct, we advance SLAM from using a measurement map that only records the mobile's observations along the movement trajectory, to using a map engine that consists of the pretrained neural operator and the target environment's medium distribution updated by the SLAM algorithm. The map engine expands the mobile's understanding about the environment to the entire space, on par with the geometric maps produced by visual SLAM. This paper addresses two specific challenges in neural operator-based mapping: one on stability of the loop of pose estimate and medium distribution update, and the other on edge-native acceleration of the neural operator for practical real-time use. We achieve nearly 12$\times$ acceleration on edge CPU with only 6.8 MB memory footprint and sub-50 cm median localization error for two sensing modalities in five environments.
           </p>
         </div>
       </div>
@@ -325,9 +325,7 @@
       <div class="container">
         <h2 class="section-title">Overview</h2>
         <div class="overview-figure">
-          <!-- Replace with your overview figure -->
-          <!-- Example: <img src="assets/overview.png" alt="Overview of NeoSLAM" /> -->
-          <div class="overview-placeholder">Overview figure goes here</div>
+          <img src="assets/overall.svg" alt="Overview of NeoSLAM" />
         </div>
       </div>
     </section>
@@ -338,51 +336,39 @@
         <div class="demo-grid">
           <div class="demo-card">
             <h3>Demo 1</h3>
-            <div class="gif-gallery">
-              <div class="gif-frame">
-                <!-- Example: <img src="assets/demo1_1.gif" alt="Demo 1 clip 1" /> -->
-                <div class="gif-placeholder">Demo 1 · GIF 1</div>
+            <div class="media-gallery">
+              <div class="media-frame">
+                <video autoplay loop muted playsinline preload="metadata">
+                  <source src="assets/demo1_1.mp4" type="video/mp4" />
+                </video>
               </div>
-              <div class="gif-frame">
-                <!-- Example: <img src="assets/demo1_2.gif" alt="Demo 1 clip 2" /> -->
-                <div class="gif-placeholder">Demo 1 · GIF 2</div>
-              </div>
-              <div class="gif-frame">
-                <!-- Example: <img src="assets/demo1_3.gif" alt="Demo 1 clip 3" /> -->
-                <div class="gif-placeholder">Demo 1 · GIF 3</div>
-              </div>
-              <div class="gif-frame">
-                <!-- Example: <img src="assets/demo1_4.gif" alt="Demo 1 clip 4" /> -->
-                <div class="gif-placeholder">Demo 1 · GIF 4</div>
+              <div class="media-frame">
+                <video autoplay loop muted playsinline preload="metadata">
+                  <source src="assets/demo1_2.mp4" type="video/mp4" />
+                </video>
               </div>
             </div>
             <p class="demo-text">
-              Add a two-line description for Demo 1 here. Use this space to explain what the four animations show and why they matter.
+              Add a two-line description for Demo 1 here. Use this space to explain what the two videos show and why they matter.
             </p>
           </div>
 
           <div class="demo-card">
             <h3>Demo 2</h3>
-            <div class="gif-gallery">
-              <div class="gif-frame">
-                <!-- Example: <img src="assets/demo2_1.gif" alt="Demo 2 clip 1" /> -->
-                <div class="gif-placeholder">Demo 2 · GIF 1</div>
+            <div class="media-gallery">
+              <div class="media-frame">
+                <video autoplay loop muted playsinline preload="metadata">
+                  <source src="assets/demo2_1.mp4" type="video/mp4" />
+                </video>
               </div>
-              <div class="gif-frame">
-                <!-- Example: <img src="assets/demo2_2.gif" alt="Demo 2 clip 2" /> -->
-                <div class="gif-placeholder">Demo 2 · GIF 2</div>
-              </div>
-              <div class="gif-frame">
-                <!-- Example: <img src="assets/demo2_3.gif" alt="Demo 2 clip 3" /> -->
-                <div class="gif-placeholder">Demo 2 · GIF 3</div>
-              </div>
-              <div class="gif-frame">
-                <!-- Example: <img src="assets/demo2_4.gif" alt="Demo 2 clip 4" /> -->
-                <div class="gif-placeholder">Demo 2 · GIF 4</div>
+              <div class="media-frame">
+                <video autoplay loop muted playsinline preload="metadata">
+                  <source src="assets/demo2_2.mp4" type="video/mp4" />
+                </video>
               </div>
             </div>
             <p class="demo-text">
-              Add a two-line description for Demo 2 here. Keep it concise and focused on the key observation across the four GIFs.
+              Add a two-line description for Demo 2 here. Keep it concise and focused on the key observation across the two videos.
             </p>
           </div>
         </div>
