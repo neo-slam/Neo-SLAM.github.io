@@ -207,6 +207,40 @@
       border-radius: 20px;
     }
 
+    .setup-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .setup-figure {
+      flex: 1 1 280px;
+      max-width: 360px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+
+    .setup-figure img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: contain;
+      display: block;
+      background: #ffffff;
+    }
+
+    .setup-figure figcaption {
+      padding: 10px 12px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      border-top: 1px solid var(--border);
+    }
+
     .demo-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -244,7 +278,7 @@
     .media-frame video {
       width: 100%;
       aspect-ratio: 16 / 9;
-      object-fit: cover;
+      object-fit: contain;
       display: block;
       background: #000000;
     }
@@ -302,7 +336,7 @@
         <div class="hero-card center">
           <h1>SLAM in Mobile-Excited Spatiotemporal Fields with Neural Operators</h1>
           <div class="button-row">
-            <a class="btn primary" href="#">Paper</a>
+            <a class="btn primary" href="assets/main.pdf" target="_blank" rel="noopener">Paper</a>
             <!-- <a class="btn primary" href="#">Demo Data</a> -->
             <a class="btn primary" href="https://github.com/neo-slam/BKNO">Code for BKNO</a>
           </div>
@@ -330,31 +364,48 @@
       </div>
     </section>
 
+    <section id="system-setup">
+      <div class="container">
+        <h2 class="section-title">System Setup</h2>
+        <div class="setup-grid">
+          <figure class="setup-figure">
+            <img src="assets/front.jpg" alt="System setup figure 1" />
+            <figcaption>Front View</figcaption>
+          </figure>
+          <figure class="setup-figure">
+            <img src="assets/top.jpg" alt="System setup figure 2" />
+            <figcaption>TTop View</figcaption>
+          </figure>
+
+      </div>
+    </section>
+
     <section id="demos">
       <div class="container">
         <h2 class="section-title">Demos</h2>
         <div class="demo-grid">
           <div class="demo-card">
-            <h3>Demo 1</h3>
-            <div class="media-gallery">
+            <h3>NeoSLAM-acoustic</h3>
+            <div class="media-gallery" style="grid-template-columns: 1fr; gap: 16px;">
               <div class="media-frame">
-                <video autoplay loop muted playsinline preload="metadata">
-                  <source src="assets/demo1_1.mp4" type="video/mp4" />
-                </video>
+              <video autoplay loop muted playsinline preload="metadata">
+                <source src="assets/acoustic_path_progress_slam.mp4" type="video/mp4" />
+              </video>
               </div>
               <div class="media-frame">
-                <video autoplay loop muted playsinline preload="metadata">
-                  <source src="assets/demo1_2.mp4" type="video/mp4" />
-                </video>
+              <video autoplay loop muted playsinline preload="metadata">
+                <source src="assets/acoustic_field_overlay.mp4" type="video/mp4" />
+              </video>
               </div>
             </div>
             <p class="demo-text">
-              Add a two-line description for Demo 1 here. Use this space to explain what the two videos show and why they matter.
+             The first is the reconstucted trajectory from NeoSLAM with acoustic signal and ground truth. The second is the predicted spatiotemporal map along the trajectory.
+            Under the long trajectory, NeoSLAM can maintain an average error of 47.4 cm.
             </p>
           </div>
 
           <div class="demo-card">
-            <h3>Demo 2</h3>
+            <h3>NeoSLAM-mmWave</h3>
             <div class="media-gallery">
               <div class="media-frame">
                 <video autoplay loop muted playsinline preload="metadata">
@@ -368,7 +419,8 @@
               </div>
             </div>
             <p class="demo-text">
-              Add a two-line description for Demo 2 here. Keep it concise and focused on the key observation across the two videos.
+              The first video shows the reconstructed trajectory from NeoSLAM with mmWave signal and ground truth. The second video displays the predicted spatiotemporal map along the trajectory.
+              Under the long trajectory, NeoSLAM can maintain an average error of 47.4 cm.
             </p>
           </div>
         </div>
@@ -377,7 +429,7 @@
   </main>
 
   <footer>
-    © 2026 NeoSLAM Project Page.
+    © 2024 NeoSLAM Project Page.
   </footer>
 </body>
 </html>
